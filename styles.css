@@ -36,6 +36,7 @@
 
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -100,6 +101,7 @@ p {
   padding: 16px;
   width: 100%;
   transition: all var(--animation-duration) ease;
+  z-index: 1;
 }
 
 #navbar.navbar--dark {
