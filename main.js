@@ -34,6 +34,11 @@ workBtnContainer.addEventListener('click', (e) => {
   let filter = e.target.dataset.filter || e.target.parentNode.dataset.filter;
   if(!filter) return
 
+  // remove selection from the previous item and select the new one
+  const active = document.querySelector('.category__btn.active')
+  active.classList.remove('active')
+  const target = e.target.nodeName === 'BUTTON' ? e.target : e.target.parentNode
+  target.classList.add('active')
   projectContainer.classList.add('anim-out')
   setTimeout(() => {
     proejcts.forEach(project => {
