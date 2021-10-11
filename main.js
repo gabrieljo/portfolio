@@ -2,11 +2,14 @@
 
 const navBar = document.querySelector('#navbar');
 const navBarHeight = navBar.getBoundingClientRect().height;
+const arrowUp = document.querySelector('.arrow-up')
 document.addEventListener('scroll', () => {
   if(window.scrollY > navBarHeight) {
     navBar.classList.add('navbar--dark')
+    arrowUp.classList.add('visible')
   } else {
     navBar.classList.remove('navbar--dark')
+    arrowUp.classList.remove('visible')
   }
 })
 

@@ -446,8 +446,32 @@ p {
   transition: all var(--animation-duration) ease-in;
 }
 
-.contact__links i:hover{
+.contact__links i:hover {
   transform: scale(1.1);
+}
+
+
+.arrow-up {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  border-radius: 50%;
+  background-color: var(--color-mint);
+  color: var(--color-white);
+  opacity: 0;
+  transition: all var(--animation-duration) ease-in;
+  pointer-events: none;
+  text-align: center;
+  line-height: 50px;
+}
+
+.arrow-up.visible {
+  opacity: 1;
+  /* opacity 사용시에 안보이거나 보일때 이벤트 발생 여부 처리*/
+  pointer-events: auto; 
 }
 
 @media screen and (max-width: 768px) {
