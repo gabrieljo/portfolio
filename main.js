@@ -26,6 +26,27 @@ document.addEventListener('scroll', () => {
   home.style.opacity = 1 - window.scrollY / homeHeight
 })
 
+const workBtnContainer = document.querySelector('.work__categories')
+const projectContainer = document.querySelector('.work__projects')
+const proejcts = document.querySelectorAll('.project')
+
+workBtnContainer.addEventListener('click', (e) => {
+  let filter = e.target.dataset.filter || e.target.parentNode.dataset.filter;
+  if(!filter) return
+
+  projectContainer.classList.add('anim-out')
+  setTimeout(() => {
+    proejcts.forEach(project => {
+      if(filter === '*' || filter === project.dataset.type) {
+        project.classList.remove('invisible')
+      } else {
+        project.classList.add('invisible')
+      }
+    })
+    projectContainer.classList.remove('anim-out')
+  }, 300)
+})
+
 function moveScrollToElement(event) {
   const target = event.target
   const link = target.dataset.link
