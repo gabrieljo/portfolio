@@ -3,7 +3,10 @@
 const navBar = document.querySelector('#navbar');
 const navBarHeight = navBar.getBoundingClientRect().height;
 const arrowUp = document.querySelector('.arrow-up')
+const navbarMenu = document.querySelector('.navbar__menu')
+
 document.addEventListener('scroll', () => {
+  navbarMenu.classList.remove('open')
   if(window.scrollY > navBarHeight) {
     navBar.classList.add('navbar--dark')
     arrowUp.classList.add('visible')
@@ -13,8 +16,14 @@ document.addEventListener('scroll', () => {
   }
 })
 
-// const navbarMenu = document.querySelector('.navbar__menu')
-// navbarMenu.addEventListener('click', moveScrollToElement)
+//Navbar toggle button for mobile
+
+const navbarToggleBtn = document.querySelector('.navbar__toggle-btn')
+navbarToggleBtn.addEventListener('click', () => {
+  navbarMenu.classList.toggle('open')
+})
+
+navbarMenu.addEventListener('click', moveScrollToElement)
 
 const btnContact = document.querySelector('.home__contact')
 btnContact.addEventListener('click', moveScrollToElement)
