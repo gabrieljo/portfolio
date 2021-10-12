@@ -15,7 +15,9 @@ document.addEventListener('scroll', () => {
     arrowUp.classList.remove('visible')
   }
 })
-
+arrowUp.addEventListener('click', () => {
+  scrollIntoView('#home')
+})
 //Navbar toggle button for mobile
 
 const navbarToggleBtn = document.querySelector('.navbar__toggle-btn')
@@ -60,11 +62,95 @@ workBtnContainer.addEventListener('click', (e) => {
     projectContainer.classList.remove('anim-out')
   }, 300)
 })
+ 
+
+
+// const sections = document.querySelectorAll('section')
+
+// const callback = (entries, observer) => {
+  
+//   entries.forEach(entry => {
+//     if (entry.intersectionRatio > 0.1) {
+//       const previousSection =  document.querySelector('.navbar__menu__item.active')
+//       previousSection.classList.remove('active')
+//       const selectedSection = document.querySelector(`li[data-link="#${entry.target.id}"]`)
+//       selectedSection.classList.add('active')
+//     }
+//   })
+// }
+
+// let observer = new IntersectionObserver(callback);
+// sections.forEach(section => observer.observe(section))
+
+const sectionIds = [
+  '#home',
+  '#about',
+  '#skills',
+  '#work',
+  '#testimonials',
+  '#contact'
+]
+
+const sections = sectionIds.map(id => document.querySelector(id))
+const navItems = sectionIds.map(id => document.querySelector(`li[data-link="${id}"]`))
+
+let selectedNavIndex
+let selectedNavItem = navItems[0];
+function selectNavItem(selected) {
+  selectedNavItem.classList.remove('active')
+  selectedNavItem = selected
+  selectedNavItem.classList.add('active')
+}
+
+const observerOptions = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.3
+}
+
+const observerCallback = (entries, observer) => {
+  entries.forEach(entry => {
+    if(!entry.isIntersecting) {
+      // entry가 빠져나갈때
+      const index = sectionIds.indexOf(`#${entry.target.id}`)
+
+      // 스크롤링이 아래로 되어서 페이지가 올라오면
+      if(entry.boundingClientRect.y < 0) {
+        selectedNavIndex = index + 1
+      } else {
+        // 스크롤링이 아래로 되어서 페이지가 내려가면
+        selectedNavIndex = index - 1
+      }
+      
+    }
+  })
+}
+
+const observer = new IntersectionObserver(observerCallback)
+
+sections.forEach(section => observer.observe(section))
+
+// wheel은 사용자가 휠을 직접 동작 시켰을때 발생,
+// scroll은 스크롤 자체가 움직이면 무조건 발생
+window.addEventListener('wheel', () => {
+  if(window.scrollY === 0) {
+    selectedNavIndex = 0
+  } else if(window.scrollY + window.innerHeight === document.body.clientHeight) {
+    selectedNavIndex = navItems.length - 1
+  }
+  selectNavItem(navItems[selectedNavIndex])
+})
 
 function moveScrollToElement(event) {
   const target = event.target
   const link = target.dataset.link
   if(link == null) return
-  const scrollTo = document.querySelector(link)
+  
+  scrollIntoView(link)
+}
+
+function scrollIntoView(selector) {
+  const scrollTo = document.querySelector(selector)
   scrollTo.scrollIntoView({behavior:"smooth"})
+  selectNavItem(navItems[sectionIds.indexOf(selector)])
 }
